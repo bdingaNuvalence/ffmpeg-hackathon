@@ -49,10 +49,14 @@ export const useRecorder = (props) => {
   const [statusMessage, setStatusMessage] = useState(null);
   const [recordedUint8Array, setRecordedUint8Array] = useState(null);
   const [watermarkPosition, setWatermarkPosition] = useState(null);
+  const [scalingValue, setScalingValue] = useState(null);
+  const [opacity, setOpacity] = useState((null));
   const fileRef = useRef(null);
   const videoRef = useRef(null);
   const recorderService = {
     watermarkPosition,
+    scalingValue,
+    opacity,
     statusMessage,
     isAllowedRecording,
     setIsAllowedRecording,
@@ -67,9 +71,20 @@ export const useRecorder = (props) => {
     setStatusMessage
   };
   const handleWatermarkSelect = useCallback((e) => {
-    console.log('-change',e.currentTarget.value);
+    console.log('-change', e.currentTarget.value);
     setWatermarkPosition(e.currentTarget.value);
-  },[setWatermarkPosition]);
+  }, [setWatermarkPosition]);
+
+  const handleScaling = useCallback((e) => {
+    console.log('-change', e.currentTarget.value);
+    setScalingValue(e.currentTarget.value);
+  }, [setScalingValue]);
+
+  const handleOpacity = useCallback((e) => {
+    console.log('-change', e.currentTarget.value);
+    setOpacity(e.currentTarget.value);
+  }, [setOpacity]);
+
   const handleClick = useCallback((e) => {
     if (isRecording) {
       handleStopRecording(recorderService);
@@ -89,11 +104,11 @@ export const useRecorder = (props) => {
 
   useEffect(() => {
     if (recordedUint8Array) {
-      props.handleVideoCapture(recordedUint8Array, { watermarkPosition });
+      props.handleVideoCapture(recordedUint8Array, { watermarkPosition, scalingValue, opacity });
     }
   /* eslint-disable react-hooks/exhaustive-deps */
   }, [recordedUint8Array]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  return { ...recorderService, handleWatermarkSelect, watermarkPosition, handleClick };
+  return { ...recorderService, handleWatermarkSelect, watermarkPosition, handleClick, handleScaling, handleOpacity };
 };

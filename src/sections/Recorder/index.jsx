@@ -29,11 +29,11 @@ const Recorder = (props) => {
   const history = useHistory();
 
   const handleVideoCapture = async (payload, opts = {}) => {
-    console.log('opts.watermarkPosition:', opts.watermarkPosition);
+    console.log('opts:', opts);
     const waterMark = await window.fetch(nuvalenceLogoPng);
     const waterMarkBlob = await waterMark.blob();
     const waterMarkUint8 = new Uint8Array(await (waterMarkBlob.arrayBuffer()));
-    const watermarkOpts = { position: opts.watermarkPosition || 'tl', scaleFactor: 100, opacity: 100, videoUint8: payload, videoFilename: 'recorded', watermark: { file: waterMarkUint8, filename: 'sammy.png' } };
+    const watermarkOpts = { position: opts.watermarkPosition || 'tl', scaleFactor: opts.scalingValue, opacity: opts.opacity, videoUint8: payload, videoFilename: 'recorded', watermark: { file: waterMarkUint8, filename: 'sammy.png' } };
     const processed = await waterMarkUtils.watermark(watermarkOpts);
     setVideoBlob(processed);
     history.push('/record/rendered');
@@ -54,7 +54,7 @@ const RecorderUI = (props) => {
   const location = useLocation();
 
   const handleVideoCapture = { ...props, handleVideoCapture: (props.handleVideoCapture ? props.handleVideoCapture : () => {}) };
-  const { watermarkPosition, handleWatermarkSelect, isAllowedRecording, isRecording, statusMessage, handleClick, fileRef, videoRef } = useRecorder(handleVideoCapture);
+  const { watermarkPosition, handleWatermarkSelect, handleScaling, handleOpacity ,isAllowedRecording, isRecording, statusMessage, handleClick, fileRef, videoRef } = useRecorder(handleVideoCapture);
   const buttonProps = {
     ...(!isAllowedRecording ? { disabled: !isAllowedRecording } : {})
   };
@@ -67,13 +67,39 @@ const RecorderUI = (props) => {
     <h1 className="heading heading-content">Make a Posting</h1>
     <video {...applyVideoDims} ref={videoRef} controls /><br/>
     <button onClick={handleClick} {...buttonProps} >{isRecording ? 'Recording' : 'Start Recording'}</button><br/>
-    <select onChange={handleWatermarkSelect}>
+    <label htmlFor="scaleFactor"> Position</label>
+    <select id="position" onChange={handleWatermarkSelect}>
       <option value="tl">Top Left</option>
       <option value="tr">Top Right</option>
       <option value="bl">Bottom Left</option>
       <option value="br">Bottom Right</option>
       <option value="mm">Middle Center</option>
     </select>
+    <label htmlFor="scaleFactor"> Scaling (%)</label>
+    <select id="scaleFactor" onChange={handleScaling}>
+      <option value="25">25%</option>
+      <option value="50">50%</option>
+      <option value="75">75%</option>
+      <option value="100">100%</option>
+      <option value="125">125%</option>
+      <option value="150">150%</option>
+      <option value="175">175%</option>
+      <option value="200">200%</option>
+    </select>
+    <label htmlFor="opacity"> Opacity (%)</label>
+    <select id="opacity" onChange={handleOpacity}>
+      <option value="10">10%</option>
+      <option value="20">20%</option>
+      <option value="30">30%</option>
+      <option value="40">40%</option>
+      <option value="50">50%</option>
+      <option value="60">60%</option>
+      <option value="70">70%</option>
+      <option value="80">80%</option>
+      <option value="90">90%</option>
+      <option value="100">100%</option>
+    </select>
+
     {/*<input ref={fileRef} type="file" /><br/>*/}
     <p className="body-text">{statusMessage}</p>
   </>;
