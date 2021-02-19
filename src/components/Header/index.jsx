@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import normanPng from '../../assets/Sammy.png';
+import normanPng from '../../assets/sammy.png';
 import Nav from '../Nav';
 
 import './css.scss';

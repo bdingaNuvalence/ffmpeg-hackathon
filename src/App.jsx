@@ -7,9 +7,7 @@ import {
 import './App.scss';
 import AssetMaster from './sections/AssetMaster';
 import About from './sections/About';
-import Movie from './sections/Movie';
-// import Organization from './sections/Organization';
-import Organization from './sections/Organization/index.final.jsx';
+import Recorder from './sections/Recorder';
 import Home from './sections/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -28,8 +26,7 @@ function App() {
   return (<>
     <Router>
       <Switch>
-        <Route path="/organizations" component={Organization} />
-        <Route path="/movie" component={Movie} />
+        <Route exact path="/record" component={Recorder} />
         <Route exact path="/about" component={About} />
         <Route exact path="/assets" component={AssetMaster} />
         <Route exact path="/" component={Home} />

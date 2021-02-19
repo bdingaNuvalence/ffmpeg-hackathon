@@ -9,10 +9,6 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bdingaNuvalence/ffmpeg-hackathon/issues"
-  },
-  "homepage": "https://github.com/bdingaNuvalence/ffmpeg-hackathon#readme",
   "dependencies": {
     "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.7",
