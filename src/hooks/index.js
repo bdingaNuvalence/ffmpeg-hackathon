@@ -41,7 +41,6 @@ const initNavigator = async ({ setRecordingInstance, setStatusMessage, setIsAllo
 
   setStatusMessage('Ready to record - Muted to avoid echos');
   setIsAllowedRecording(true);
-  console.log('videoRef.current:', videoRef);
 };
 export const useRecorder = (props) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -49,9 +48,11 @@ export const useRecorder = (props) => {
   const [recordingInstance, setRecordingInstance] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
   const [recordedUint8Array, setRecordedUint8Array] = useState(null);
+  const [watermarkPosition, setWatermarkPosition] = useState(null);
   const fileRef = useRef(null);
   const videoRef = useRef(null);
   const recorderService = {
+    watermarkPosition,
     statusMessage,
     isAllowedRecording,
     setIsAllowedRecording,
@@ -65,9 +66,11 @@ export const useRecorder = (props) => {
     setIsRecording,
     setStatusMessage
   };
-
+  const handleWatermarkSelect = useCallback((e) => {
+    console.log('-change',e.currentTarget.value);
+    setWatermarkPosition(e.currentTarget.value);
+  },[setWatermarkPosition]);
   const handleClick = useCallback((e) => {
-    console.log('clicked');
     if (isRecording) {
       handleStopRecording(recorderService);
     } else {
@@ -79,7 +82,6 @@ export const useRecorder = (props) => {
   /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    console.log('useRecorder -> use-effect');
     initNavigator(recorderService);
   /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
@@ -87,12 +89,11 @@ export const useRecorder = (props) => {
 
   useEffect(() => {
     if (recordedUint8Array) {
-      console.log('useRecorder -> handleVideoCapture');
-      props.handleVideoCapture(recordedUint8Array);
+      props.handleVideoCapture(recordedUint8Array, { watermarkPosition });
     }
   /* eslint-disable react-hooks/exhaustive-deps */
   }, [recordedUint8Array]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  return { ...recorderService, handleClick };
+  return { ...recorderService, handleWatermarkSelect, watermarkPosition, handleClick };
 };

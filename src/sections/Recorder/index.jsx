@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import MovieCard from '../../components/MovieCard';
 import Pagination from '../../components/Pagination';
 import MovieDetail from '../MovieDetail';
+import nuvalenceLogoPng from '../../assets/nuvalence.png';
 import { waterMarkUtils, reactUtils, jsUtils } from '../../utils';
 
 import { useRecorder } from '../../hooks';
@@ -27,12 +28,17 @@ const Recorder = (props) => {
   const [videoBlob, setVideoBlob] = useState(null);
   const history = useHistory();
 
-  const handleVideoCapture = async (payload) => {
-    const watermarkOpts = { position: 'tl', scaleFactor: 100, opacity: 100, videoUint8: payload, videoFilename: 'recorded', watermark: { file: './sammy.png', filename: 'sammy.png' } };
+  const handleVideoCapture = async (payload, opts = {}) => {
+    console.log('opts.watermarkPosition:', opts.watermarkPosition);
+    const waterMark = await window.fetch(nuvalenceLogoPng);
+    const waterMarkBlob = await waterMark.blob();
+    const waterMarkUint8 = new Uint8Array(await (waterMarkBlob.arrayBuffer()));
+    const watermarkOpts = { position: opts.watermarkPosition || 'tl', scaleFactor: 100, opacity: 100, videoUint8: payload, videoFilename: 'recorded', watermark: { file: waterMarkUint8, filename: 'sammy.png' } };
     const processed = await waterMarkUtils.watermark(watermarkOpts);
     setVideoBlob(processed);
     history.push('/record/rendered');
   };
+
   return <>
     <Header />
     <main className="main-content main-movie">
@@ -48,7 +54,7 @@ const RecorderUI = (props) => {
   const location = useLocation();
 
   const handleVideoCapture = { ...props, handleVideoCapture: (props.handleVideoCapture ? props.handleVideoCapture : () => {}) };
-  const { isAllowedRecording, isRecording, statusMessage, handleClick, fileRef, videoRef } = useRecorder(handleVideoCapture);
+  const { watermarkPosition, handleWatermarkSelect, isAllowedRecording, isRecording, statusMessage, handleClick, fileRef, videoRef } = useRecorder(handleVideoCapture);
   const buttonProps = {
     ...(!isAllowedRecording ? { disabled: !isAllowedRecording } : {})
   };
@@ -61,13 +67,24 @@ const RecorderUI = (props) => {
     <h1 className="heading heading-content">Make a Posting</h1>
     <video {...applyVideoDims} ref={videoRef} controls /><br/>
     <button onClick={handleClick} {...buttonProps} >{isRecording ? 'Recording' : 'Start Recording'}</button><br/>
+    <select onChange={handleWatermarkSelect}>
+      <option value="tl">Top Left</option>
+      <option value="tr">Top Right</option>
+      <option value="bl">Bottom Left</option>
+      <option value="br">Bottom Right</option>
+      <option value="mm">Middle Center</option>
+    </select>
     {/*<input ref={fileRef} type="file" /><br/>*/}
     <p className="body-text">{statusMessage}</p>
   </>;
 };
 
 const RenderedUI = (props) => {
-  console.log('URL',window.URL, 'props.videoBlob', props.videoBlob)
+  const history = useHistory();
+  if (!props.videoBlob) {
+    history.replace('/record');
+    return null;
+  }
   const videoSrc = useRef(window.URL.createObjectURL(props.videoBlob));
   return <>
     <h1 className="heading heading-content">Processed Video</h1>
@@ -76,10 +93,6 @@ const RenderedUI = (props) => {
   </>;
 };
 export const MovieRouter = (props) => <>
-  {(() => {
-    console.log(`${props.match.path}/rendered`);
-    return null;
-  })()}
   <Route exact path={props.match.path}><RecorderUI handleVideoCapture={props.handleVideoCapture} /></Route>
   <Route exact path={`${props.match.path}/rendered`}><RenderedUI videoBlob={props.videoBlob} /></Route>
 </>;
