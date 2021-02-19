@@ -17,7 +17,7 @@ const { useBodyClass } = reactUtils;
 const placeHolderImage = '/images/300x450-coming-soon.png';
 
 const Movie = (props) => {
-  useBodyClass('page-movie');
+  useBodyClass('page-record');
   return <>
     <Header />
     <main className="main-content main-movie">

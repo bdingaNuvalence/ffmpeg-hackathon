@@ -26,7 +26,7 @@ function App() {
   return (<>
     <Router>
       <Switch>
-        <Route exact path="/record" component={Recorder} />
+        <Route path="/record" component={Recorder} />
         <Route exact path="/about" component={About} />
         <Route exact path="/assets" component={AssetMaster} />
         <Route exact path="/" component={Home} />

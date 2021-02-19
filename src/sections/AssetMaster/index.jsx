@@ -6,7 +6,7 @@ import scssVariables from '../../variables.scss';
 
 const { useBodyClass } = reactUtils;
 const AssetMaster = () => {
-  useBodyClass('page-movie');
+  useBodyClass('page-record');
   document.title = `Assets & Colours - ${siteUtils.websiteTitle()}`;
   return <>
     <Header />

@@ -8,7 +8,7 @@ import './css.scss';
 const Footer = ({ dateStamp }) => {
   const footertRef = useRef(null);
   const onButtonClick = buttonFactory(footertRef);
-  const dateMicro = dateStamp || new Date('2020-10-01').getTime();
+  const dateMicro = dateStamp || new Date('2021-10-01').getTime();
 
   return <footer className="footer" ref={footertRef}>
     <div className="footer-fixed-wrapper">

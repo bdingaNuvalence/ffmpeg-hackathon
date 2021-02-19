@@ -9,7 +9,7 @@ const MovieDetail = (props) => {
   const { placeHolderImage, match: { params: { movieId = null } } } = props;
   const [contextualMovie, setContextual] = useState(null);
 
-  useBodyClass('page-movie');
+  useBodyClass('page-record');
   useEffect(() => {
     Promise.resolve({})
       .then((response) => {
