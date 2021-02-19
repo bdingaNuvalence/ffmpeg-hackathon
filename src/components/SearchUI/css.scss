@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.search-ui-input {
+  width: 100%;
+  font-size: 2.1rem;
+  padding: 0.2rem 0.8rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #{$Highlight-dark};
+  color: #{$Highlight-dark};
+  &::placeholder {
+    color: #{$Primary-muted};
+  }
+}

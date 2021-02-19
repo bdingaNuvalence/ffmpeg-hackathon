@@ -1,0 +1,93 @@
+@import '../../variables';
+
+.movie {
+  & > .heading {
+    text-align: center;
+  }
+  & > .heading-minor {
+    color: #{$Highlight-dark};
+  }
+  .movie-detail {
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: center;
+    & > * {
+      // flex: 1 0 15%;
+      // flex: 1 0 auto;
+    //   width: 100%;
+    //   margin: 1.5rem auto;
+    }
+    @media screen and (min-width: $break-large) {
+      // flex: 1 0 auto;
+      // display: flex;
+      // flex-wrap: wrap;
+      //
+      & > * {
+        // flex: 1 0 auto;
+      }
+    }
+  }
+
+  .movie-detail aside,
+  .movie-detail article {
+    background: rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    @media screen and (min-width: $break-large) {;
+    }
+  }
+
+  .movie-detail article {
+    padding: 0.25rem 1.5rem;
+    @media screen and (min-width: $break-large) {
+      width: calc(66% - 1.5rem);
+    }
+  }
+  .movie-detail aside {
+    background-color: #{$Theme-mode-target};
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    @media screen and (min-width: $break-large) {
+      width: 33%;
+      margin: 0;
+    }
+    img { width: 100%; }
+    ul.ratings {
+      // margin-left: auto;
+      @media screen and (min-width: $break-large) {
+        padding-right: 1.25rem;
+        box-sizing: border-box;
+      }
+      display:block;
+      width: 90%;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // flex-wrap: wrap;
+      // margin-right: auto;
+      // margin-left: auto;
+      margin-bottom: 0.5rem;
+    }
+    ul.ratings > li {
+      font-size: 1.3rem;
+      margin-top: 0.5rem;
+      // display: inline-block;
+      // width: 20px;
+      // height: 20px;
+      // padding: 2px;
+      // margin: 4px;
+      // box-sizing: border-box;
+      // overflow: hidden;
+      // border: 1px solid #{$Highlight-dark};
+    }
+    ul.ratings > li span {
+      // box-sizing: border-box;
+      // width:100%;
+      // height:100%;
+      // display: block;
+      // padding: 3px;
+    }
+  }
+}

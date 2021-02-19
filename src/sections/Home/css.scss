@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.home-hero{
+  width: 100%;
+  height: 100%;
+}
+.main-home{
+  & > section {
+    border-radius: $UI-radius;
+  }
+  .heading {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: 400;
+    color: #{$UI-highlight};
+    text-align: center;
+    padding:0;
+    margin:0;
+  }
+  .hero-message-top{padding-top: 2rem;margin-bottom:-3.5rem;}
+  .hero-message-bottom{padding-bottom: 2rem;margin-top:-3.5rem;}
+  .home-hero-wrapper{
+    // position: relative;
+    background-color: rgba($UI-highlight-dull, 0.21);
+    border-radius: $UI-radius;
+  }
+}
