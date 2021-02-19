@@ -46,7 +46,6 @@ const Recorder = (props) => {
         <MovieRouter {...{ ...props, handleVideoCapture, videoBlob }} />
       </section>
     </main>
-    <Footer />
   </>;
 };
 
@@ -74,7 +73,7 @@ const RecorderUI = (props) => {
       <option value="bl">Bottom Left</option>
       <option value="br">Bottom Right</option>
       <option value="mm">Middle Center</option>
-    </select>
+    </select><br/>
     <label htmlFor="scaleFactor"> Scaling (%)</label>
     <select id="scaleFactor" onChange={handleScaling}>
       <option value="25">25%</option>
@@ -85,19 +84,19 @@ const RecorderUI = (props) => {
       <option value="150">150%</option>
       <option value="175">175%</option>
       <option value="200">200%</option>
-    </select>
+    </select><br/>
     <label htmlFor="opacity"> Opacity (%)</label>
     <select id="opacity" onChange={handleOpacity}>
-      <option value="10">10%</option>
-      <option value="20">20%</option>
-      <option value="30">30%</option>
-      <option value="40">40%</option>
-      <option value="50">50%</option>
-      <option value="60">60%</option>
-      <option value="70">70%</option>
-      <option value="80">80%</option>
-      <option value="90">90%</option>
       <option value="100">100%</option>
+      <option value="90">90%</option>
+      <option value="80">80%</option>
+      <option value="70">70%</option>
+      <option value="60">60%</option>
+      <option value="50">50%</option>
+      <option value="40">40%</option>
+      <option value="30">30%</option>
+      <option value="20">20%</option>
+      <option value="10">10%</option>
     </select>
 
     {/*<input ref={fileRef} type="file" /><br/>*/}
